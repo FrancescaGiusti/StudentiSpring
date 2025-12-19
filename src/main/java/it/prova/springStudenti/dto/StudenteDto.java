@@ -1,9 +1,11 @@
 package it.prova.springStudenti.dto;
 
+import it.prova.springStudenti.model.Corso;
 import it.prova.springStudenti.model.Studente;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StudenteDto {
@@ -11,7 +13,7 @@ public class StudenteDto {
     private String nome;
     private String cognome;
     private LocalDate dataDiNascita;
-    private String corsoDiLaurea;
+    private Set<Corso> corsi;
 
 
     public StudenteDto(){}
@@ -24,12 +26,12 @@ public class StudenteDto {
         this.dataDiNascita = dataDiNascita;
     }
 
-    public String getCorsoDiLaurea() {
-        return corsoDiLaurea;
+    public Set<Corso> getCorsi() {
+        return corsi;
     }
 
-    public void setCorsoDiLaurea(String corsoDiLaurea) {
-        this.corsoDiLaurea = corsoDiLaurea;
+    public void setCorsi(Set<Corso> corsi) {
+        this.corsi = corsi;
     }
 
     public void setNome(String nome){
@@ -60,7 +62,7 @@ public class StudenteDto {
         Studente studente = new Studente();
         studente.setNome(this.getNome());
         studente.setCognome(this.getCognome());
-        studente.setCorsoDiLaurea(this.getCorsoDiLaurea());
+        studente.setCorsi(this.getCorsi());
         studente.setDataDiNascita(this.getDataDiNascita());
         studente.setId(this.getId());
         return studente;
@@ -72,7 +74,7 @@ public class StudenteDto {
         studenteDto.setCognome(toConvert.getCognome());
         studenteDto.setId(toConvert.getId());
         studenteDto.setDataDiNascita(toConvert.getDataDiNascita());
-        studenteDto.setCorsoDiLaurea(toConvert.getCorsoDiLaurea());
+        studenteDto.setCorsi(toConvert.getCorsi());
         return studenteDto;
     }
 

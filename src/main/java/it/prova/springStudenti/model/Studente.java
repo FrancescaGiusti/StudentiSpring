@@ -4,6 +4,8 @@ import it.prova.springStudenti.dto.StudenteDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table (name = "studente")
@@ -18,8 +20,12 @@ public class Studente {
     private String cognome;
     @Column(name = "datadinascita")
     private LocalDate dataDiNascita;
-    @Column(name = "corsodilaurea")
-    private String corsoDiLaurea;
+    @ManyToMany
+    @JoinTable(name = "studenti_corsi",
+            joinColumns = @JoinColumn(name =  "studente_id"),
+            inverseJoinColumns = @JoinColumn(name = "corso_id"))
+    @Column(name = "corso")
+    private Set<Corso> corsi = new HashSet<>();
 
 
     public Studente(){}
@@ -29,11 +35,18 @@ public class Studente {
         this.cognome = cognome;
     }
 
-    public Studente(String nome, String cognome, LocalDate dataDiNascita, String corsoDiLaurea) {
+    public Studente(String nome, String cognome, LocalDate dataDiNascita) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;
-        this.corsoDiLaurea = corsoDiLaurea;
+    }
+
+    public Set<Corso> getCorsi() {
+        return corsi;
+    }
+
+    public void setCorsi(Set<Corso> corsi) {
+        this.corsi = corsi;
     }
 
     public LocalDate getDataDiNascita() {
@@ -42,14 +55,6 @@ public class Studente {
 
     public void setDataDiNascita(LocalDate dataDiNascita) {
         this.dataDiNascita = dataDiNascita;
-    }
-
-    public String getCorsoDiLaurea() {
-        return corsoDiLaurea;
-    }
-
-    public void setCorsoDiLaurea(String corsoDiLaurea) {
-        this.corsoDiLaurea = corsoDiLaurea;
     }
 
     public void setNome(String nome){
@@ -78,6 +83,6 @@ public class Studente {
 
     @Override
     public String toString(){
-        return this.nome + " " + this.cognome + ", corso di laurea: " + this.corsoDiLaurea + ", data di nascita: " + this.dataDiNascita;
+        return this.nome + " " + this.cognome + ", corsi di studio: " + this.corsi + ", data di nascita: " + this.dataDiNascita;
     }
 }
