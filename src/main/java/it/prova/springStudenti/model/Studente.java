@@ -80,15 +80,4 @@ public class Studente {
     public String toString(){
         return this.nome + " " + this.cognome + ", corso di laurea: " + this.corsoDiLaurea + ", data di nascita: " + this.dataDiNascita;
     }
-
-    public StudenteDto toDto (){
-        StudenteDto studenteDto = new StudenteDto();
-        studenteDto.setNome(this.getNome());
-        studenteDto.setCognome(this.getCognome());
-        studenteDto.setId(this.getId());
-        studenteDto.setDataDiNascita(this.getDataDiNascita());
-        studenteDto.setCorsoDiLaurea(this.getCorsoDiLaurea());
-        return studenteDto;
-    }
-
 }

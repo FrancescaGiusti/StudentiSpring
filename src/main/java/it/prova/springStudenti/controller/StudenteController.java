@@ -60,7 +60,7 @@ public class StudenteController {
         List<StudenteDto> studentiDto = new ArrayList<>();
         StudenteDto sDto = null;
         for (Studente s : studenti){
-           sDto = s.toDto();
+            sDto = StudenteDto.convertFromModel(s);
             studentiDto.add(sDto);
         }
         return studentiDto;

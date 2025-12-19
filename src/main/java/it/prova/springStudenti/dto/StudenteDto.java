@@ -63,4 +63,15 @@ public class StudenteDto {
         studente.setId(this.getId());
         return studente;
     }
+
+    public static StudenteDto convertFromModel (Studente toConvert){
+        StudenteDto studenteDto = new StudenteDto();
+        studenteDto.setNome(toConvert.getNome());
+        studenteDto.setCognome(toConvert.getCognome());
+        studenteDto.setId(toConvert.getId());
+        studenteDto.setDataDiNascita(toConvert.getDataDiNascita());
+        studenteDto.setCorsoDiLaurea(toConvert.getCorsoDiLaurea());
+        return studenteDto;
+    }
+
 }
