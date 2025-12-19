@@ -40,8 +40,9 @@ public class StudenteController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity aggiornaStudente(@PathVariable long id, @RequestBody StudenteDto studenteDto){
+    public ResponseEntity aggiornaStudente(@PathVariable Long id, @RequestBody StudenteDto studenteDto){
         Studente studente = studenteDto.toModel();
+        studente.setId(id);
         if (studenteService.findById(studente.getId()) == null)
             throw new RuntimeException("Lo studente non esiste");
         studenteService.modificaStudente(studente);
