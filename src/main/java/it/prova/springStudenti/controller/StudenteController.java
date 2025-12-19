@@ -38,7 +38,7 @@ public class StudenteController {
         if (studente == null)
             throw new RuntimeException("Lo studente non esiste");
         studenteService.eliminaStudente(id);
-        return ResponseEntity.status(204).body("Studente eliminato con successo");
+        return ResponseEntity.ok("Studente eliminato con successo");
     }
 
     @PutMapping("{id}")
