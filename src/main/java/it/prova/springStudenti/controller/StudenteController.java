@@ -42,10 +42,9 @@ public class StudenteController {
         return ResponseEntity.ok("Studente eliminato con successo");
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity aggiornaStudente(@PathVariable Long id, @RequestBody StudenteDto studenteDto){
+    @PutMapping()
+    public ResponseEntity aggiornaStudente(@RequestBody StudenteDto studenteDto){
         Studente studente = studenteDto.toModel();
-        studente.setId(id);
         if (studenteService.findById(studente.getId()) == null)
             throw new RuntimeException("Lo studente non esiste");
         studenteService.modificaStudente(studente);
