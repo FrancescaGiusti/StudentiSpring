@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/studente")
 public class StudenteController {
@@ -47,6 +49,11 @@ public class StudenteController {
             throw new RuntimeException("Lo studente non esiste");
         studenteService.modificaStudente(studente);
         return ResponseEntity.status(200).body("Studente correttamente aggiornato");
+    }
+
+    @GetMapping ("leggi")
+    public List<Studente> leggiStudenti(){
+        return studenteService.getAll();
     }
 
 
