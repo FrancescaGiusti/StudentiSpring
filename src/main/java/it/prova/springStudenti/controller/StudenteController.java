@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,8 +53,17 @@ public class StudenteController {
     }
 
     @GetMapping ("leggi")
-    public List<Studente> leggiStudenti(){
-        return studenteService.getAll();
+    public List<StudenteDto> leggiStudenti(){
+        List<Studente> studenti = studenteService.getAll();
+        if (studenti.isEmpty())
+            throw new RuntimeException("Non sono presenti studenti");
+        List<StudenteDto> studentiDto = new ArrayList<>();
+        StudenteDto sDto = null;
+        for (Studente s : studenti){
+           sDto = s.toDto();
+            studentiDto.add(sDto);
+        }
+        return studentiDto;
     }
 
 
