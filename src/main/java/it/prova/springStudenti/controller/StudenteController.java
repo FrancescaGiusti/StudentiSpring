@@ -57,13 +57,7 @@ public class StudenteController {
         List<Studente> studenti = studenteService.getAll();
         if (studenti.isEmpty())
             throw new RuntimeException("Non sono presenti studenti");
-        List<StudenteDto> studentiDto = new ArrayList<>();
-        StudenteDto sDto = null;
-        for (Studente s : studenti){
-            sDto = StudenteDto.convertFromModel(s);
-            studentiDto.add(sDto);
-        }
-        return studentiDto;
+        return StudenteDto.convertFromModel(studenti);
     }
 
 

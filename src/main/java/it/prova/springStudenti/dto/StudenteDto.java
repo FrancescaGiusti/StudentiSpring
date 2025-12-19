@@ -3,6 +3,8 @@ package it.prova.springStudenti.dto;
 import it.prova.springStudenti.model.Studente;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudenteDto {
     private Long id;
@@ -73,5 +75,10 @@ public class StudenteDto {
         studenteDto.setCorsoDiLaurea(toConvert.getCorsoDiLaurea());
         return studenteDto;
     }
+
+    public static List<StudenteDto> convertFromModel (List<Studente> listToConvert){
+        return listToConvert.stream().map(s -> StudenteDto.convertFromModel(s)).collect(Collectors.toUnmodifiableList());
+    }
+
 
 }
