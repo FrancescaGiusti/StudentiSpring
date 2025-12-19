@@ -37,8 +37,9 @@ public class StudenteServiceImpl implements  StudenteService{
     public void modificaStudente(Studente studente) {
       if(studenteRepository.existsById(studente.getId())){
           studenteRepository.save(studente);
+      } else {
+          throw new RuntimeException("Utente non trovato");
       }
-      throw new RuntimeException("Utente non trovato");
     }
 
     @Override
