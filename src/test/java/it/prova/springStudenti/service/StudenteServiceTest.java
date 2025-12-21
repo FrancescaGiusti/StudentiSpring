@@ -1,16 +1,18 @@
-package it.prova.springStudenti;
+package it.prova.springStudenti.service;
 
+import it.prova.springStudenti.model.Corso;
 import it.prova.springStudenti.model.Studente;
-import it.prova.springStudenti.service.StudenteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
-class SpringStudentiApplicationTests {
+class StudenteServiceTest {
     @Autowired
     private StudenteServiceImpl studenteServiceImpl;
 
@@ -64,12 +66,14 @@ class SpringStudentiApplicationTests {
         System.out.println("**************** test ricercaInBaseAlCorsoDiLaurea Inizio ****************");
         List<Studente> studentiCompleti = studenteServiceImpl.getAll();
         Studente studente = studentiCompleti.get(0);
-        studente.setCorsoDiLaurea("Matematica");
+        Set<Corso> corsi = new HashSet<>();
+        corsi.add(new Corso("Matematica"));
+        studente.setCorsi(corsi);
         studenteServiceImpl.modificaStudente(studente);
         List<Studente> studentiCercati = studenteServiceImpl.cercaTuttiInBaseAlCorsoDiLaurea("Matematica");
         if (studentiCercati.size() > 0) {
             Studente trovatoConCorso = studentiCercati.get(0);
-            if (!trovatoConCorso.getCorsoDiLaurea().equals("Matematica")) {
+            if (!trovatoConCorso.getCorsi().equals("Matematica")) {
                 throw new RuntimeException("Test fallito");
             }
         }

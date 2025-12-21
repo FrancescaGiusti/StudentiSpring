@@ -12,8 +12,8 @@ import java.util.List;
 public interface StudenteRepository extends JpaRepository<Studente, Long>{
     List<Studente> findAllByNomeLike(String nome);
 
-    @Query("select s from Studente s where s.corsoDiLaurea = :corsodilaurea")
-    List<Studente> findAllByCorsoDiLaurea(@Param("corsodilaurea") String corsoDiLaurea);
+    @Query("select s from Studente s join s.corsi c where c.nome = :nome")
+    List<Studente> findAllByCorsoDiLaurea(@Param("nome") String nomeCorso);
 
     @Query("select s from Studente s order by s.dataDiNascita ASC")
     List<Studente> sortAllByDataDiNascita();

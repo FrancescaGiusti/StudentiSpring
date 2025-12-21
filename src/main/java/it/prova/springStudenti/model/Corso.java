@@ -14,7 +14,7 @@ public class Corso {
     private Long id;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "esito")
+    @Column(name = "cancellato")
     private boolean cancellato;
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "corsi")
     @Column(name = "studente")

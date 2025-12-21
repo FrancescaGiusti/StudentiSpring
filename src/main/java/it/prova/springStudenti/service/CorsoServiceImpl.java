@@ -2,10 +2,14 @@ package it.prova.springStudenti.service;
 
 import it.prova.springStudenti.model.Corso;
 import it.prova.springStudenti.repository.CorsoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class CorsoServiceImpl implements CorsoService{
     private final CorsoRepository corsoRepository;
 
@@ -34,6 +38,8 @@ public class CorsoServiceImpl implements CorsoService{
 
     @Override
     public void modificaCorso(Corso corso) {
+        if (this.findById(corso.getId()) == null)
+            throw new RuntimeException("Il corso non esiste");
         corsoRepository.save(corso);
     }
 
@@ -43,5 +49,10 @@ public class CorsoServiceImpl implements CorsoService{
         if (corso == null)
             throw new RuntimeException("Il corso non esiste");
        corsoRepository.delete(corso);
+    }
+
+    @Override
+    public List<Corso> ordinaPerNome() {
+        return corsoRepository.sortAllCorsi();
     }
 }
