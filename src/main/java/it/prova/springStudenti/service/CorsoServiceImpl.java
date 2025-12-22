@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,11 +21,11 @@ public class CorsoServiceImpl implements CorsoService{
     }
 
     @Override
-    public List<Corso> getAll() {
+    public Set<Corso> getAll() {
         if (corsoRepository.findAll().isEmpty()){
             throw new RuntimeException("Non ci sono corsi");
         }
-        return corsoRepository.findAll();
+        return corsoRepository.findAll().stream().collect(Collectors.toSet());
     }
 
     @Override

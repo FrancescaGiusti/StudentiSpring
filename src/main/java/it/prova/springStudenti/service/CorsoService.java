@@ -2,9 +2,10 @@ package it.prova.springStudenti.service;
 
 import it.prova.springStudenti.model.Corso;
 import java.util.List;
+import java.util.Set;
 
 public interface CorsoService {
-    List<Corso> getAll();
+    Set<Corso> getAll();
     Corso findById(Long id);
     void aggiungiCorso(Corso corso);
     void modificaCorso(Corso corso);

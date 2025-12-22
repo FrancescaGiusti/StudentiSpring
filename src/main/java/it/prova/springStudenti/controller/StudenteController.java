@@ -1,6 +1,9 @@
 package it.prova.springStudenti.controller;
 
+import it.prova.springStudenti.dto.CorsoDto;
+import it.prova.springStudenti.dto.IscrizioneDto;
 import it.prova.springStudenti.dto.StudenteDto;
+import it.prova.springStudenti.model.Corso;
 import it.prova.springStudenti.model.Studente;
 import it.prova.springStudenti.service.StudenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/studenti/")
@@ -57,5 +61,31 @@ public class StudenteController {
         if (studenti.isEmpty())
             throw new RuntimeException("Non sono presenti studenti");
         return ResponseEntity.ok(StudenteDto.convertFromModel(studenti));
+    }
+
+    @PostMapping("partecipa")
+    public ResponseEntity<String> aggiungiStudenteACorso(@RequestBody IscrizioneDto iscrizioneDto){
+        if(iscrizioneDto.getIdCorso() == null || iscrizioneDto.getIdStudente() == null)
+            throw new RuntimeException("Campi di input non validi");
+        studenteService.aggiungiStudenteACorso(iscrizioneDto.getIdStudente(), iscrizioneDto.getIdCorso());
+        return ResponseEntity.status(HttpStatus.OK).body("Studente aggiunto correttamente");
+    }
+
+    @DeleteMapping("abbandona")
+    public ResponseEntity<String> eliminaStudenteDaCorso(@RequestBody IscrizioneDto iscrizioneDto){
+        if(iscrizioneDto.getIdCorso() == null || iscrizioneDto.getIdStudente() == null)
+            throw new RuntimeException("Campi di input non validi");
+        studenteService.eliminaStudenteDaCorso(iscrizioneDto.getIdStudente(), iscrizioneDto.getIdCorso());
+        return ResponseEntity.status(HttpStatus.OK).body("Studente cancellato correttamente");
+    }
+
+    @GetMapping("completo/{id}")
+    public ResponseEntity<StudenteDto> studenteConCorsi(@PathVariable Long id){
+        Studente studente = studenteService.studentiByIdEager(id);
+        StudenteDto studenteDto = StudenteDto.convertFromModel(studente);
+        Set<Corso> corsiStudente = studente.getCorsi();
+        Set<CorsoDto> corsiDtoStudente = CorsoDto.convertFromModel(corsiStudente);
+        studenteDto.setCorsi(corsiDtoStudente);
+        return ResponseEntity.status(HttpStatus.OK).body(studenteDto);
     }
 }

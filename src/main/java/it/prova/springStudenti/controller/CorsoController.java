@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/corsi")
@@ -46,8 +47,8 @@ public class CorsoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CorsoDto>> leggiCorsi(){
-        List<Corso> corsi = corsoService.getAll();
+    public ResponseEntity<Set<CorsoDto>> leggiCorsi(){
+        Set<Corso> corsi = corsoService.getAll();
         return ResponseEntity.ok(CorsoDto.convertFromModel(corsi));
     }
 

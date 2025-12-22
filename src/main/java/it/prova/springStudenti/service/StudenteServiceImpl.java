@@ -1,6 +1,8 @@
 package it.prova.springStudenti.service;
 
+import it.prova.springStudenti.model.Corso;
 import it.prova.springStudenti.model.Studente;
+import it.prova.springStudenti.repository.CorsoRepository;
 import it.prova.springStudenti.repository.StudenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.List;
 @Transactional
 public class StudenteServiceImpl implements  StudenteService{
     private final StudenteRepository studenteRepository;
+    private final CorsoRepository corsoRepository;
 
     @Autowired
-    public StudenteServiceImpl(StudenteRepository studenteRepository){
+    public StudenteServiceImpl(StudenteRepository studenteRepository, CorsoRepository corsoRepository){
         this.studenteRepository = studenteRepository;
+        this.corsoRepository = corsoRepository;
     }
 
     @Override
@@ -59,5 +63,28 @@ public class StudenteServiceImpl implements  StudenteService{
     @Override
     public List<Studente> ordinaTuttiInBaseAllaDataDiNAscita() {
         return studenteRepository.sortAllByDataDiNascita();
+    }
+
+    @Override
+    public void aggiungiStudenteACorso(Long idStudente, Long idCorso) {
+        if (corsoRepository.findById(idCorso).isEmpty()|| studenteRepository.findById(idStudente).isEmpty())
+            throw new RuntimeException("Campi di input non validi");
+        studenteRepository.addStudentToCourse(idStudente, idCorso);
+    }
+
+    @Override
+    public void eliminaStudenteDaCorso(Long idStudente, Long idCorso) {
+        if (corsoRepository.findById(idCorso).isEmpty()|| studenteRepository.findById(idStudente).isEmpty())
+            throw new RuntimeException("Campi di input non validi");
+        studenteRepository.deleteStudenteFromCourse(idStudente, idCorso);
+    }
+
+    @Override
+    public Studente studentiByIdEager(Long idStudente) {
+        Studente studente = studenteRepository.studentByIdEager(idStudente);
+        if (studente == null){
+            throw  new RuntimeException("Non esiste nessuno studente con l'id indicato");
+        }
+       return studente;
     }
 }
