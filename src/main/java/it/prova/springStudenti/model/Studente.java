@@ -24,7 +24,6 @@ public class Studente {
     @JoinTable(name = "studenti_corsi",
             joinColumns = @JoinColumn(name =  "studente_id"),
             inverseJoinColumns = @JoinColumn(name = "corso_id"))
-    @Column(name = "corso")
     private Set<Corso> corsi = new HashSet<>();
 
 

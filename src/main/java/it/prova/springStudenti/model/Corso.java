@@ -17,7 +17,6 @@ public class Corso {
     @Column(name = "cancellato")
     private boolean cancellato;
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "corsi")
-    @Column(name = "studente")
     private List<Studente> studenti = new ArrayList<>();
 
     public Corso(){}
