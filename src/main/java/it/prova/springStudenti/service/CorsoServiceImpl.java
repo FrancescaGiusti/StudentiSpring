@@ -25,7 +25,8 @@ public class CorsoServiceImpl implements CorsoService{
         if (corsoRepository.findAll().isEmpty()){
             throw new RuntimeException("Non ci sono corsi");
         }
-        return corsoRepository.findAll().stream().collect(Collectors.toSet());
+        return corsoRepository.findAllWhereCancellatoIsfalse().stream().collect(Collectors.toSet());
+//        return corsoRepository.findAll().stream().collect(Collectors.toSet());
     }
 
     @Override
@@ -56,5 +57,12 @@ public class CorsoServiceImpl implements CorsoService{
     @Override
     public List<Corso> ordinaPerNome() {
         return corsoRepository.sortAllCorsi();
+    }
+
+    @Override
+    public void eliminazioneLogicaCorso(Long idCorso) {
+        if(corsoRepository.findById(idCorso) == null)
+            throw new RuntimeException("Corso non trovato");
+        corsoRepository.logicDelete(idCorso);
     }
 }

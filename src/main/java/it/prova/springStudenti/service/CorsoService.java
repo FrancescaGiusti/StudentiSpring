@@ -11,4 +11,5 @@ public interface CorsoService {
     void modificaCorso(Corso corso);
     void eliminaCorso(Long id);
     List<Corso> ordinaPerNome();
+    void eliminazioneLogicaCorso(Long idCorso);
 }

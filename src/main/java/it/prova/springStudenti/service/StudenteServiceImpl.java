@@ -69,6 +69,8 @@ public class StudenteServiceImpl implements  StudenteService{
     public void aggiungiStudenteACorso(Long idStudente, Long idCorso) {
         if (corsoRepository.findById(idCorso).isEmpty()|| studenteRepository.findById(idStudente).isEmpty())
             throw new RuntimeException("Campi di input non validi");
+        if (!corsoRepository.existsByIdAndCancellatoIsFalse(idCorso))
+            throw new RuntimeException("Corso non più attivo!");
         studenteRepository.addStudentToCourse(idStudente, idCorso);
     }
 

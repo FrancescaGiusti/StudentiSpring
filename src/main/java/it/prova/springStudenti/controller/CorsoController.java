@@ -33,11 +33,11 @@ public class CorsoController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Corso creato con successo");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminaCorso(@PathVariable Long id){
-        corsoService.eliminaCorso(id);
-        return ResponseEntity.ok("Corso eliminato con successo");
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> eliminaCorso(@PathVariable Long id){
+//        corsoService.eliminaCorso(id);
+//        return ResponseEntity.ok("Corso eliminato con successo");
+//    }
 
     @PutMapping()
     public ResponseEntity<String> aggiornaCorso(@RequestBody CorsoDto corsoDto){
@@ -50,6 +50,14 @@ public class CorsoController {
     public ResponseEntity<Set<CorsoDto>> leggiCorsi(){
         Set<Corso> corsi = corsoService.getAll();
         return ResponseEntity.ok(CorsoDto.convertFromModel(corsi));
+    }
+
+    @DeleteMapping("/{idCorso}")
+    public ResponseEntity<String> eliminazioneLogicaCorso(@PathVariable Long idCorso){
+        if (idCorso == null)
+            throw new RuntimeException("paremetri in input non validi");
+        corsoService.eliminazioneLogicaCorso(idCorso);
+        return ResponseEntity.status(HttpStatus.OK).body("Eliminazione logica avvenuta con successo");
     }
 
 }
